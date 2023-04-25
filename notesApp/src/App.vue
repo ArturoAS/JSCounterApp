@@ -1,47 +1,90 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+
 </script>
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
+    
   </header>
 
   <main>
-    <TheWelcome />
+  <div class="container">
+    <header>
+      <h1>Notes</h1>
+      <button>+</button>
+    </header>
+    <div class="cards-container">
+      <div class="card">
+      <p class="main-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, minus.
+      </p>
+      <p class="date">04/20/2023</p>
+    </div>
+    <div class="card">
+      <p class="main-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, minus.
+      </p>
+      <p class="date">04/20/2023</p>
+    </div>
+    </div>
+  </div>
   </main>
 </template>
 
 <style scoped>
+.main {
+  height: 100vh;
+  width: 100vw;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
 header {
-  line-height: 1.5;
+  display: flex;
+  justify-content: space-between;
+
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+h1 {
+  font-weight: bold;
+  font-size: 75px;
+  margin-bottom: 25px;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+button {
+  border: none;
+  padding: 10px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  background-color: black;
+  border-radius: 100%;
+  color: white;
+  font-size: 20px;
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+.card{
+  height: 225px;
+  width: 225px;
+  background-color:brown;
+  padding: 10px;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.date{
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.cards-container{
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>
