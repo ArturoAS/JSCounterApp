@@ -1,31 +1,48 @@
 <script setup>
+import { ref } from "vue";
 
+const showModal = ref(false)
+const newNote = ref("")
+const notes = ref([])
+
+function getRandomColor() {
+  return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+}
+
+const addNote = () => {
+  notes.value.push({
+    id: Math.floor(Math.random() * 100000),
+    text: newNote.value,
+    date: new Date(),
+    noteColor: getRandomColor()
+  })
+  showModal.value = false;
+  newNote.value = "";
+}
 </script>
 
 <template>
-  <header>
-    
-  </header>
-
   <main>
-  <div class="container">
-    <header>
-      <h1>Notes</h1>
-      <button>+</button>
-    </header>
-    <div class="cards-container">
-      <div class="card">
-      <p class="main-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, minus.
-      </p>
-      <p class="date">04/20/2023</p>
+    <div v-if="showModal" class="overlay">
+      <div class="modal">
+        <textarea v-model="newNote" name="note" id="note" cols="30" rows="10"></textarea>
+        <button @click="addNote">Add Note</button>
+        <button2 class="close" @click="showModal = false">Close</button2>
+      </div>
     </div>
-    <div class="card">
-      <p class="main-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, minus.
-      </p>
-      <p class="date">04/20/2023</p>
+    <div class="container">
+      <header>
+        <h1>Notes</h1>
+        <button @click="showModal = true">+</button>
+      </header>
+      <div class="cards-container">
+        <div v-for="note in notes" class="card" :style="{ backgroundColor: note.noteColor }">
+          <p class="main-text">{{ note.text }}
+          </p>
+          <p class="date">{{ note.date.toLocaleDateString("en-US") }}</p>
+        </div>
+      </div>
     </div>
-    </div>
-  </div>
   </main>
 </template>
 
@@ -65,10 +82,10 @@ button {
   font-size: 20px;
 }
 
-.card{
+.card {
   height: 225px;
   width: 225px;
-  background-color:brown;
+  background-color: brown;
   padding: 10px;
   border-radius: 15px;
   display: flex;
@@ -78,13 +95,84 @@ button {
   margin-bottom: 20px;
 }
 
-.date{
+.date {
   font-weight: bold;
   font-size: 15px;
 }
 
-.cards-container{
+.cards-container {
   display: flex;
   flex-wrap: wrap;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.77);
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+main {
+  height: 100vh;
+  width: 100vw;
+}
+
+
+.modal {
+  width: 750px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal button {
+  padding: 10px 20px;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(0, 122, 29);
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+  border-radius: 0%;
+}
+
+.modal button2 {
+  padding: 10px 20px;
+  font-size: 20px;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(122, 8, 0);
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-top: 15px;
+  border-radius: 0%;
+  text-align: center;
+}
+
+.modal p {
+  margin-left: auto;
+  font-size: 20px;
+  z-index: 100000;
+  cursor: pointer;
+}
+
+textarea {
+  width: 100%;
+  height: 200px;
+  padding: 5px;
+  font-size: 20px;
 }
 </style>
